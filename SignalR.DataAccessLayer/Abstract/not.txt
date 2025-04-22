@@ -1,0 +1,11 @@
+﻿IAboutDal, IGenericDal<About>’ı miras alıyor, böylece CRUD metotlarını alıyor.
+Ekstra bir işlem gerekirse, bunu IAboutDal içine ekleriz.
+Ama IAboutDal içinde metodun içeriğini yazamayız, çünkü arayüzler sadece imza taşır.
+
+IABOUTDAL DA BİR INTERFACE. INTERFACELER SADECE İMZA TAŞIYOR. METODUN İÇERİĞİNİ EFABOUTDAL İÇİNE YAZMALIYIZ.
+
+
+
+
+EfAboutDal, IAboutDal'ı uygulayan ve asıl işlemi gerçekleştiren sınıftır.
+Burada metodun içeriğini yazarız.

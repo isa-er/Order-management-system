@@ -1,0 +1,31 @@
+﻿
+Bu sınıf (herhangi bir tanesi), Entity Framework (EF) ile About tablosuna özel veri erişim işlemlerini gerçekleştirmek için oluşturulmuş.
+
+
+EfAboutDal, GenericRepository<About> sınıfından türemiş.
+Aynı zamanda IAboutDal arayüzünü (interface’ini) uyguluyor.
+Yani About tablosuna özel veritabanı işlemlerini yöneten bir sınıf.
+
+
+
+EfAboutDal Neden Var?
+
+Kod tekrarını önlemek için.
+GenericRepository<T> sayesinde tüm entity’ler (About, Product, Category vs.) için ortak işlemler yazıldı.
+Ama bazı entity’lere özel işlemler eklemek gerektiğinde (IAboutDal gibi), bu sınıfları oluşturuyoruz.
+Örnek: Eğer sadece About için özel bir metot yazmak istersen, bunu EfAboutDal içinde yapabilirsin.
+
+
+
+************* ÖZET *********
+
+
+IGenericDal<T> içinde tüm entity'ler için ortak metotların (Add, Delete, Update, GetById, GetListAll) sadece imzaları var.
+GenericRepository<T> içinde bu imzaların içeriğini yazıyoruz, böylece her entity için tekrar tekrar CRUD işlemleri yazmamıza gerek kalmıyor.
+Ama bazı entity'ler için özel metotlar gerekiyorsa (GetRecentAbouts gibi), bunun imzasını IAboutDal içine ekliyoruz.
+Bu özel metotların içeriğini ise EfAboutDal içine yazıyoruz.
+
+
+
+generic repo içinde IGenericDal içinde imzası olan metotoların içeriğini yazıyoruz. Efaboutdal içine ise IAboutdal içinde About için özel metotun imzası yer alırken bu metotun içeriği EfAboutDal içinde yer alır.
+

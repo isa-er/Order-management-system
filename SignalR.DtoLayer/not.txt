@@ -1,0 +1,6 @@
+﻿DTO (data transfer object)
+Amacı, komple tüm entityi çağırmak yerine sadece entity içinde gerekli olan değişkeni çağırmaktır
+
+
+Entity (Person) → Veritabanındaki tüm alanları içerir.
+DTO (PersonDto) → Sadece kullanıcıya göndermek istediklerimizi içerir.

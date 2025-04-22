@@ -1,0 +1,26 @@
+﻿Entitylerimiz ile DTO'daki değerleri eşleştireceğiz.
+
+
+
+var value = _mapper.Map<Booking>(createBookingDto); // createBookingDto'yu booking'e dönüştürüyoruz. buradaki amaç ne ?
+
+createBookingDto nesnesini alıyor ve onu bir Booking nesnesine dönüştürüyor (mapliyor).
+
+ Neden Böyle Bir Şey Yapıyoruz?
+Çünkü çoğu projede katmanlar arası veri farklı modellerle taşınır.
+
+🧱 Gerçek Dünya Senaryosu:
+11)Kullanıcı bir form doldurur:
+
+*Ad, soyad, tarih vs.
+*Bu veriler bir CreateBookingDto sınıfına gelir (genellikle ViewModel/DTO olur)
+
+2)Veritabanına kaydedeceğin model Booking sınıfıdır.
+
+DTO ile Entity farklıdır çünkü:
+*DTO'da genellikle Id, CreatedDate gibi şeyler olmaz
+*Veya validasyon farklıdır
+*UI'ya özel alanlar olabilir
+
+🎯 O satırın amacı şu:
+Gelen DTO’yu al ve veritabanına kaydedeceğim Booking sınıfına çevirmemi sağla.

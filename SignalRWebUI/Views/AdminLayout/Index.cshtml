@@ -1,0 +1,32 @@
+﻿
+@*Admin Layout Controller.  Layout sayfası burası. RenderBody ile (bu sayfayı layout olarak kullanan sayfalar) ile partiallar görüntüleniyor
+ *@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+@await Component.InvokeAsync("_LayoutHeaderPartialComponent")
+<body>
+	<div class="wrapper">
+		@await Component.InvokeAsync("_LayoutNavbarComponentPartial")
+		@await Component.InvokeAsync("_LayoutSideBarComponentPartial")
+
+		<div class="main-panel">
+			
+			@RenderBody()
+
+
+
+			@await Component.InvokeAsync("_LayoutFooterComponentPartial")
+			
+		</div>
+	</div>	
+
+	@await Component.InvokeAsync("_LayoutScriptComponentPartial")
+</body>
+
+</html>

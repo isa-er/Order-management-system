@@ -1,0 +1,73 @@
+﻿Burada Data Access (veri erişim) katmanından gelen veriler işlenir ve API ya da UI katmanına sunulur.
+
+validasyon kontrolleri yapılabilir. mesela if(yetki) yetkisi var mı yok mu gibi.
+
+BUSINESS LAYER ,ŞİMDİLİK , DATAACCESSLAYER'DAKİ DEĞERLERİ ÇAĞIRDIĞIMIZ YER OLACAK.
+
+ileride ise validasyon eklenebilir. (fluent validation)
+
+***************************
+
+
+
+📌 Business Layer'da şu tür işlemleri yapabiliriz:
+✅ SQL gerektirmeyen işlemler:
+
+İsmi büyük harfe çevirme (entity.Name = entity.Name.ToUpper();)
+Güncellenme tarihini atama (entity.UpdatedDate = DateTime.Now;)
+Eğer belirli bir alan boşsa hata fırlatma (if (string.IsNullOrWhiteSpace(entity.Name)) throw new Exception("Ad boş olamaz!");)
+Log ekleme (Console.WriteLine("Yeni About eklendi: " + entity.Name);)
+📌 Ama SQL gerektiren işlemleri doğrudan Business Layer’da yazamayız!
+❌ Add, Delete, Update, GetById, GetListAll gibi veritabanı işlemlerini her zaman Data Access Layer (DAL) içinde tanımlayıp çağırmalıyız.
+
+**************************
+
+🚀 Sonuç:
+👉 SQL gerektirmeyen işlemler → Business Layer’da yapılır.
+👉 SQL gerektiren işlemler → Data Access Layer’dan çağrılır.
+
+Böylece katmanlı mimariyi korumuş ve temiz kod yazmış oluyoruz! 
+
+
+
+***********************
+
+
+
+Business katmanı, Data Access katmanını kullanarak veriyi işler.
+Business'ta özel işlemler yapılabilir (veri doğrulama, kurallar vs.).
+IAboutService sadece şablon sağlar, içeriği AboutManager içinde olur.
+
+
+*********************
+
+Data Access (DAL)	Veritabanı işlemlerini yapar.
+Business Layer (BLL)	İş mantığını uygular, ama doğrudan DB ile uğraşmaz.
+Presentation (UI, API)	Kullanıcıya gösterir.
+
+
+
+************ örnek **************
+
+1️ Düz Ekleme (Hiçbir İş Mantığı Yok)
+public void TAdd(About entity)
+{
+    _aboutDal.Add(entity);
+}
+Burada TAdd() sadece _aboutDal.Add(entity) çağırarak veriyi doğrudan veritabanına kaydediyor.
+Hiçbir ekstra işlem yok, direkt DataAccess katmanına iletiyor.
+
+
+
+2 Diyelim ki ekleme yaparken, About’un Name özelliği boş olmamalı.
+Bunu Data Access'te değil, Business katmanında kontrol etmelisin.
+
+public void TAdd(About entity)
+{
+    if (string.IsNullOrWhiteSpace(entity.Name))
+    {
+        throw new Exception("About ismi boş olamaz!"); // İş mantığı eklendi
+    }
+
+    _aboutDal.Add(entity); // Eğer validasyon geçerse ekle
+}

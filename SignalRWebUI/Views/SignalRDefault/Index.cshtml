@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+
+}
+
+<h1>Index</h1>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+
+@* @Render Scripts{} >>>>> Bu sayfanın bağlı olduğu layouttaki (en başta seçmemiştik ama default olarak Home'daki layout geliyor) scriptler bu sayfada çalışsın
+ *@
+
+
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
+   <div class="content">
+       <div class="container-fluid">
+           <div class="row">
+               <div class="col-md-12">
+                   <div class="card">
+                        <script type="text/javascript" >
+                            
+                            $(document).ready(()=>{
+
+                                // SignalR'ın client tarafında kullanılabilmesi için bir connection oluşturduk.
+                                var connection= new signalR.HubConnectionBuilder().withUrl("https://localhost:7113/SignalRHub").build();
+
+                                $("#connstatus").text(connection.state); // connection'un state'ini yazdırıyoruz.
+
+
+                                connection.start().then(()=>{
+
+                                    $("#connstatus").text(connection.state); /* connectionı başlattıktan sonra yazdırıyoruz */
+
+                                connection.invoke("SendCategoryCount"); // connection.invoke metodu ile SendCategoryCount metoduna istekte bulunuyoruz.  connection'ı başlattıktan sonra Hub tarafında yazdığımız metodu çağırıyoruz.
+
+                                }).catch((err)=>{console.log(err) }); // hata varsa yazdır.
+                                    
+
+                               
+
+
+
+                                connection.on("ReceiveCategoryCount",(value)=>{
+                                        $("#categorycount").text(value);
+
+                                }) // SendCategoryCount metodu içindeki >ReceiveCategoryCount metoduna istekte bulunacağız bu sefer. Value değeri bunun içinde
+
+                            });
+                        
+
+                        </script>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+   </div> 
+
+
+
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="alert alert-success">Bağlantının durumu: <strong id="connstatus"></strong> </div>
+        <div class="alert alert-info">Kategori Sayısı: <strong id="categorycount"></strong> </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

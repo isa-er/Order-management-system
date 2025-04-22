@@ -1,0 +1,16 @@
+﻿Senin GenericRepository<T> sınıfın, Data Access Layer (DAL) içinde veritabanı işlemlerini yönetmek için kullanılıyor.
+
+Bu sınıfın amacı:
+✔️ Kod tekrarını önlemek (Her entity için CRUD işlemlerini ayrı ayrı yazmamak)
+✔️ Esnek bir yapı sağlamak (Herhangi bir entity ile çalışabilir)
+
+
+
+
+public class GenericRepository<T> : IGenericDal<T> where T : class
+
+T burada bir entity olacak. Örneğin, About, User, Product gibi.
+IGenericDal<T>’den kalıtım alıyor:
+Yani bu sınıf, IGenericDal<T> içindeki tüm metotları gerçekleştirmek zorunda.
+
+
